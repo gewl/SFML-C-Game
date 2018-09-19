@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "GameManager.h"
 #include "SplashScreen.h"
+#include "MainMenu.h"
 #include <iostream>
 
 void GameManager::Start(void)
@@ -41,16 +42,29 @@ void GameManager::Tick()
 		case GameManager::Paused:
 			break;
 		case GameManager::ShowingMenu:
+			ShowMenu();
 			break;
 		case GameManager::Playing:
-			_mainWindow.clear(sf::Color(255, 0, 0));
-			_mainWindow.display();
+			sf::Event currentEvent;
 
-			if (currentEvent.type == sf::Event::Closed)
+			while (_mainWindow.pollEvent(currentEvent))
 			{
-				_gameState = GameManager::Exiting;
+				_mainWindow.clear(sf::Color(0, 0, 0));
+				_mainWindow.display();
+				if (currentEvent.type == sf::Event::Closed)
+				{
+					_gameState = GameManager::Exiting;
+				}
+				else if (currentEvent.type == sf::Event::KeyPressed)
+				{
+					if (currentEvent.key.code == sf::Keyboard::Escape)
+					{
+						ShowMenu();
+					}
+				}
+				break;
 			}
-			break;
+
 		case GameManager::Exiting:
 			_mainWindow.clear(sf::Color(0, 255, 0));
 			_mainWindow.display();
@@ -65,6 +79,24 @@ void GameManager::ShowSplashScreen()
 {
 	SplashScreen splashScreen;
 	splashScreen.Show(_mainWindow);
+	_gameState = GameManager::ShowingMenu;
+}
+
+void GameManager::ShowMenu()
+{
+	MainMenu mainMenu;
+	MainMenu::MenuResult result = mainMenu.Show(_mainWindow);
+	switch (result)
+	{
+	case MainMenu::Exit:
+		_gameState = GameManager::Exiting;
+		break;
+	case MainMenu::Play:
+		_gameState = GameManager::Playing;
+		break;
+	default:
+		break;
+	}
 }
 
 GameManager::GameState GameManager::_gameState = Uninitialized;

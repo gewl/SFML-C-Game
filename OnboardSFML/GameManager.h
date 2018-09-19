@@ -13,8 +13,16 @@ private:
 	static void Tick();
 
 	static void ShowSplashScreen();
+	static void ShowMenu();
 
-	enum GameState { Uninitialized, ShowingSplash, Paused, ShowingMenu, Playing, Exiting };
+	enum GameState { 
+		Uninitialized, 
+		ShowingSplash, 
+		Paused, 
+		ShowingMenu, 
+		Playing, 
+		Exiting 
+	};
 
 	static GameState _gameState;
 	static sf::RenderWindow _mainWindow;
