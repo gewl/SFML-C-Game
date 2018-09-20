@@ -12,6 +12,11 @@ void GameManager::Start(void)
 	}
 
 	_mainWindow.create(sf::VideoMode(1024, 768, 32), "Confused Ball");
+
+	sf::IntRect playerSourceSprite(65, 192, 73, 96);
+	_player.Load("images/player_spritesheet.png", playerSourceSprite);
+	_player.SetPosition((1024 / 2) - 45, 300);
+
 	_gameState = GameManager::ShowingSplash;
 
 	while (!IsExiting())
@@ -50,6 +55,7 @@ void GameManager::Tick()
 			while (_mainWindow.pollEvent(currentEvent))
 			{
 				_mainWindow.clear(sf::Color(0, 0, 0));
+				_player.Draw(_mainWindow);
 				_mainWindow.display();
 				if (currentEvent.type == sf::Event::Closed)
 				{
@@ -64,7 +70,7 @@ void GameManager::Tick()
 				}
 				break;
 			}
-
+			break;
 		case GameManager::Exiting:
 			_mainWindow.clear(sf::Color(0, 255, 0));
 			_mainWindow.display();
@@ -101,3 +107,4 @@ void GameManager::ShowMenu()
 
 GameManager::GameState GameManager::_gameState = Uninitialized;
 sf::RenderWindow GameManager::_mainWindow;
+PlayerCharacter  GameManager::_player;
