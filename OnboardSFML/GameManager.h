@@ -3,6 +3,7 @@
 #include "SFML/Window.hpp"
 #include "SFML/Graphics.hpp"
 #include "PlayerCharacter.h"
+#include "GameObjectManager.h"
 
 class GameManager
 {
@@ -27,5 +28,6 @@ private:
 
 	static GameState _gameState;
 	static sf::RenderWindow _mainWindow;
-	static PlayerCharacter _player;
+
+	static GameObjectManager _gameObjectManager;
 };

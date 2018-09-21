@@ -154,6 +154,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="GameManager.h" />
+    <ClInclude Include="GameObjectManager.h" />
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="PlayerCharacter.h" />
     <ClInclude Include="SplashScreen.h" />
@@ -163,6 +164,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameManager.cpp" />
+    <ClCompile Include="GameObjectManager.cpp" />
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="OnboardSFML.cpp" />
     <ClCompile Include="PlayerCharacter.cpp" />
