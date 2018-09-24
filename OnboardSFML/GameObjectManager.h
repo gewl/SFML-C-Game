@@ -12,7 +12,7 @@ public:
 	VisibleGameObject* Get(std::string name) const;
 
 	void DrawAll(sf::RenderWindow& renderWindow);
-
+	void UpdateAll(sf::Time elapsedTime);
 private:
 	std::map<std::string, VisibleGameObject*> _gameObjects;
 	struct GameObjectDeallocator {

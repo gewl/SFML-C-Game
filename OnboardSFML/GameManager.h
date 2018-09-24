@@ -9,8 +9,12 @@ class GameManager
 {
 public:
 	static void Start();
+	static sf::RenderWindow& GetWindow();
+	const static int SCREEN_WIDTH = 1024;
+	const static int SCREEN_HEIGHT = 768;
 
 private:
+	static sf::Clock clock;
 	static bool IsExiting();
 	static void Tick();
 

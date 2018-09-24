@@ -13,9 +13,7 @@ void GameManager::Start(void)
 
 	_mainWindow.create(sf::VideoMode(1024, 768, 32), "Confused Ball");
 
-	sf::IntRect playerSourceSprite(65, 192, 73, 96);
 	PlayerCharacter *player = new PlayerCharacter();
-	player->Load("images/player_spritesheet.png", playerSourceSprite);
 	player->SetPosition((1024 / 2) - 45, 300);
 
 	_gameObjectManager.Add("Player", player);
@@ -35,52 +33,52 @@ bool GameManager::IsExiting()
 	return _gameState == GameManager::Exiting;
 }
 
+sf::RenderWindow& GameManager::GetWindow()
+{
+	return _mainWindow;
+}
+
 void GameManager::Tick()
 {
 	sf::Event currentEvent;
-	while (_mainWindow.pollEvent(currentEvent))
-	{
-		switch (_gameState)
-		{
-		case GameManager::Uninitialized:
-			break;
-		case GameManager::ShowingSplash:
-			ShowSplashScreen();
-			break;
-		case GameManager::Paused:
-			break;
-		case GameManager::ShowingMenu:
-			ShowMenu();
-			break;
-		case GameManager::Playing:
-			sf::Event currentEvent;
+	_mainWindow.pollEvent(currentEvent);
+	sf::Time frameTime = clock.restart();
 
-			while (_mainWindow.pollEvent(currentEvent))
-			{
-				_mainWindow.clear(sf::Color(0, 0, 0));
-				_gameObjectManager.DrawAll(_mainWindow);
-				_mainWindow.display();
-				if (currentEvent.type == sf::Event::Closed)
-				{
-					_gameState = GameManager::Exiting;
-				}
-				else if (currentEvent.type == sf::Event::KeyPressed)
-				{
-					if (currentEvent.key.code == sf::Keyboard::Escape)
-					{
-						ShowMenu();
-					}
-				}
-				break;
-			}
-			break;
-		case GameManager::Exiting:
-			_mainWindow.clear(sf::Color(0, 255, 0));
-			_mainWindow.display();
-			break;
-		default:
-			break;
+	switch (_gameState)
+	{
+	case GameManager::Uninitialized:
+		break;
+	case GameManager::ShowingSplash:
+		ShowSplashScreen();
+		break;
+	case GameManager::Paused:
+		break;
+	case GameManager::ShowingMenu:
+		ShowMenu();
+		break;
+	case GameManager::Playing:
+		_mainWindow.clear(sf::Color(0, 0, 0));
+		_gameObjectManager.UpdateAll(frameTime);
+		_gameObjectManager.DrawAll(_mainWindow);
+		_mainWindow.display();
+		if (currentEvent.type == sf::Event::Closed)
+		{
+			_gameState = GameManager::Exiting;
 		}
+		else if (currentEvent.type == sf::Event::KeyPressed)
+		{
+			if (currentEvent.key.code == sf::Keyboard::Escape)
+			{
+				ShowMenu();
+			}
+		}
+		break;
+	case GameManager::Exiting:
+		_mainWindow.clear(sf::Color(0, 255, 0));
+		_mainWindow.display();
+		break;
+	default:
+		break;
 	}
 }
 
@@ -111,3 +109,4 @@ void GameManager::ShowMenu()
 GameManager::GameState GameManager::_gameState = Uninitialized;
 sf::RenderWindow GameManager::_mainWindow;
 GameObjectManager GameManager::_gameObjectManager;
+sf::Clock GameManager::clock;
