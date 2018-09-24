@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "PlayerCharacter.h"
 #include "GameManager.h"
-#include <iostream>
 
 PlayerCharacter::PlayerCharacter() :
 	_velocity(0),
@@ -31,18 +30,30 @@ float PlayerCharacter::GetVelocity() const
 
 void PlayerCharacter::Update(sf::Time elapsedTime)
 {
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+	bool leftKeyPressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Left);
+	bool rightKeyPressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Right);
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) || 
+		leftKeyPressed && rightKeyPressed)
+	{
+		_velocity = 0.0f;
+	}
+	else if (leftKeyPressed)
 	{
 		_velocity -= 3.0f;
 	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+	else if (rightKeyPressed)
 	{
 		_velocity += 3.0f;
 	}
-
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-	{
-		_velocity = 0.0f;
+	else {
+		if (_velocity != 0)
+		{
+			_velocity *= 5 / 6;
+			if (_velocity >= -0.5f && _velocity <= 0.5f)
+			{
+				_velocity = 0.0f;
+			}
+		}
 	}
 
 	if (_velocity > _maxVelocity)
@@ -61,7 +72,6 @@ void PlayerCharacter::Update(sf::Time elapsedTime)
 	{
 		_velocity = -_velocity;
 	}
-	std::cout << _velocity;
 
 	float frameTime = elapsedTime.asSeconds();
 	GetSprite().move(_velocity * frameTime, 0);	
