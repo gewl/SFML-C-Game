@@ -4,7 +4,8 @@
 
 PlayerCharacter::PlayerCharacter() :
 	_velocity(0),
-	_maxVelocity(600.0f)
+	_maxVelocity(600.0f),
+	groundedCount(0)
 {
 	sf::IntRect playerSourceSprite(65, 192, 73, 96);
 	Load("images/player_spritesheet.png", playerSourceSprite);

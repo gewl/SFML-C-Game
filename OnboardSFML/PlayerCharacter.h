@@ -16,4 +16,6 @@ public:
 private:
 	float _velocity;
 	float _maxVelocity;
+
+	int groundedCount;
 };

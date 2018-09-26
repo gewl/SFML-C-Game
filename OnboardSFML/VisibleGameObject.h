@@ -4,7 +4,7 @@
 class VisibleGameObject
 {
 public:
-	VisibleGameObject();
+	VisibleGameObject(bool _isTerrain = false);
 	virtual ~VisibleGameObject();
 
 	virtual void Load(std::string fileName);
@@ -16,8 +16,14 @@ public:
 	virtual sf::Vector2f GetPosition() const;
 	virtual bool IsLoaded() const;
 
+	virtual float GetWidth() const;
+	virtual float GetHeight() const;
+
+	virtual sf::Rect<float> GetBoundingRect() const;
+
 protected:
 	sf::Sprite& GetSprite();
+	bool isTerrain;
 
 private:
 	sf::Sprite _sprite;

@@ -1,9 +1,10 @@
 #include "stdafx.h"
 #include "VisibleGameObject.h"
 
-VisibleGameObject::VisibleGameObject()
+VisibleGameObject::VisibleGameObject(bool _isTerrain = false)
 	:_isLoaded(false)
 {
+	isTerrain = _isTerrain;
 }
 
 VisibleGameObject::~VisibleGameObject() { }
@@ -77,4 +78,19 @@ sf::Sprite& VisibleGameObject::GetSprite()
 bool VisibleGameObject::IsLoaded() const
 {
 	return _isLoaded;
+}
+
+float VisibleGameObject::GetHeight() const
+{
+	return _sprite.getGlobalBounds().height;
+}
+
+float VisibleGameObject::GetWidth() const
+{
+	return _sprite.getGlobalBounds().width;
+}
+
+sf::Rect<float> VisibleGameObject::GetBoundingRect() const
+{
+	return _sprite.getGlobalBounds();
 }
