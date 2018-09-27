@@ -3,7 +3,9 @@
 #include "SFML/Window.hpp"
 #include "SFML/Graphics.hpp"
 #include "PlayerCharacter.h"
+#include "GrassSquare.h"
 #include "GameObjectManager.h"
+#include "StaticGameObjectManager.h"
 
 class GameManager
 {
@@ -34,4 +36,5 @@ private:
 	static sf::RenderWindow _mainWindow;
 
 	static GameObjectManager _gameObjectManager;
+	static StaticGameObjectManager _staticGameObjectManager;
 };

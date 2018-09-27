@@ -5,5 +5,5 @@ class GrassSquare :
 	public VisibleGameObject
 {
 public:
-	GrassSquare():VisibleGameObject(true) { }
+	GrassSquare();
 };

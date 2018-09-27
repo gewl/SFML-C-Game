@@ -18,6 +18,10 @@ void GameManager::Start(void)
 
 	_gameObjectManager.Add("Player", player);
 
+	GrassSquare *terrain = new GrassSquare();
+	terrain->SetPosition((1024 / 2) - 45, 500);
+
+	_staticGameObjectManager.Add("Terrain1", terrain);
 	_gameState = GameManager::ShowingSplash;
 
 	while (!IsExiting())
@@ -60,6 +64,7 @@ void GameManager::Tick()
 		_mainWindow.clear(sf::Color(0, 0, 0));
 		_gameObjectManager.UpdateAll(frameTime);
 		_gameObjectManager.DrawAll(_mainWindow);
+		_staticGameObjectManager.DrawAll(_mainWindow);
 		_mainWindow.display();
 		if (currentEvent.type == sf::Event::Closed)
 		{
@@ -109,4 +114,5 @@ void GameManager::ShowMenu()
 GameManager::GameState GameManager::_gameState = Uninitialized;
 sf::RenderWindow GameManager::_mainWindow;
 GameObjectManager GameManager::_gameObjectManager;
+StaticGameObjectManager GameManager::_staticGameObjectManager;
 sf::Clock GameManager::clock;

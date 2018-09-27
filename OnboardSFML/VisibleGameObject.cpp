@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "VisibleGameObject.h"
 
-VisibleGameObject::VisibleGameObject(bool _isTerrain = false)
+VisibleGameObject::VisibleGameObject(bool _isTerrain)
 	:_isLoaded(false)
 {
 	isTerrain = _isTerrain;

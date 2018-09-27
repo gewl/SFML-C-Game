@@ -39,6 +39,12 @@
     <ClInclude Include="GameObjectManager.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="GrassSquare.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="StaticGameObjectManager.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -63,6 +69,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GameObjectManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GrassSquare.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="StaticGameObjectManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
