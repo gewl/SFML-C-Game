@@ -1,11 +1,14 @@
 #include "stdafx.h"
 #include "PlayerCharacter.h"
 #include "GameManager.h"
+#include <iostream>
 
 PlayerCharacter::PlayerCharacter() :
-	_velocity(0),
+	_horizontalVelocity(0),
+	_verticalVelocity(0),
 	_maxVelocity(600.0f),
-	groundedCount(0)
+	_isGrounded(false),
+	_isJumping(false)
 {
 	sf::IntRect playerSourceSprite(65, 192, 73, 96);
 	Load("images/player_spritesheet.png", playerSourceSprite);
@@ -24,46 +27,56 @@ void PlayerCharacter::Draw(sf::RenderWindow& rw)
 	VisibleGameObject::Draw(rw);
 }
 
-float PlayerCharacter::GetVelocity() const
+float PlayerCharacter::GetHorizontalVelocity() const
 {
-	return _velocity;
+	return _horizontalVelocity;
 }
 
 void PlayerCharacter::Update(sf::Time elapsedTime)
 {
 	bool leftKeyPressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Left);
 	bool rightKeyPressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Right);
+
+	_isGrounded = GameManager::GetStaticGameObjectManager().CheckCollisions(this->GetBoundingRect(), this->GetPosition());
+	if (_isGrounded)
+	{
+		_verticalVelocity = 0.0f;
+	}
+	else {
+		_verticalVelocity += 6.0f;
+	}
+
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) || 
 		leftKeyPressed && rightKeyPressed)
 	{
-		_velocity = 0.0f;
+		_horizontalVelocity = 0.0f;
 	}
 	else if (leftKeyPressed)
 	{
-		_velocity -= 3.0f;
+		_horizontalVelocity -= 3.0f;
 	}
 	else if (rightKeyPressed)
 	{
-		_velocity += 3.0f;
+		_horizontalVelocity += 3.0f;
 	}
 	else {
-		if (_velocity != 0)
+		if (_horizontalVelocity != 0)
 		{
-			_velocity *= 5 / 6;
-			if (_velocity >= -0.5f && _velocity <= 0.5f)
+			_horizontalVelocity *= 5 / 6;
+			if (_horizontalVelocity >= -0.5f && _horizontalVelocity <= 0.5f)
 			{
-				_velocity = 0.0f;
+				_horizontalVelocity = 0.0f;
 			}
 		}
 	}
 
-	if (_velocity > _maxVelocity)
+	if (_horizontalVelocity > _maxVelocity)
 	{
-		_velocity = _maxVelocity;
+		_horizontalVelocity = _maxVelocity;
 	}
-	else if (_velocity < -_maxVelocity)
+	else if (_horizontalVelocity < -_maxVelocity)
 	{
-		_velocity = -_maxVelocity;
+		_horizontalVelocity = -_maxVelocity;
 	}
 
 	sf::Vector2f pos = this->GetPosition();
@@ -71,9 +84,9 @@ void PlayerCharacter::Update(sf::Time elapsedTime)
 	if (pos.x < GetSprite().getGlobalBounds().width / 2 ||
 		pos.x > (GameManager::SCREEN_WIDTH - GetSprite().getGlobalBounds().width/2))
 	{
-		_velocity = -_velocity;
+		_horizontalVelocity = -_horizontalVelocity;
 	}
 
 	float frameTime = elapsedTime.asSeconds();
-	GetSprite().move(_velocity * frameTime, 0);	
+	GetSprite().move(_horizontalVelocity * frameTime, _verticalVelocity * frameTime);	
 }

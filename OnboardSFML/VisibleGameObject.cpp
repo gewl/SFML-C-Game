@@ -94,3 +94,8 @@ sf::Rect<float> VisibleGameObject::GetBoundingRect() const
 {
 	return _sprite.getGlobalBounds();
 }
+
+float VisibleGameObject::GetTopEdge() const
+{
+	return GetPosition().y + (GetHeight() / 2.0f);
+}

@@ -42,6 +42,11 @@ sf::RenderWindow& GameManager::GetWindow()
 	return _mainWindow;
 }
 
+StaticGameObjectManager& GameManager::GetStaticGameObjectManager()
+{
+	return _staticGameObjectManager;
+}
+
 void GameManager::Tick()
 {
 	sf::Event currentEvent;
@@ -65,6 +70,7 @@ void GameManager::Tick()
 		_gameObjectManager.UpdateAll(frameTime);
 		_gameObjectManager.DrawAll(_mainWindow);
 		_staticGameObjectManager.DrawAll(_mainWindow);
+
 		_mainWindow.display();
 		if (currentEvent.type == sf::Event::Closed)
 		{

@@ -47,3 +47,24 @@ void StaticGameObjectManager::DrawAll(sf::RenderWindow& renderWindow)
 		itr++;
 	}
 }
+
+const bool StaticGameObjectManager::CheckCollisions(sf::Rect<float> playerBounds, sf::Vector2f playerPosition)
+{
+	std::map<std::string, VisibleGameObject*>::const_iterator itr = _staticGameObjects.begin();
+
+	while (itr != _staticGameObjects.end())
+	{
+		bool doesIntersect = itr->second->GetBoundingRect().intersects(playerBounds);
+		float hd = abs((playerPosition.x * playerPosition.x) + (itr->second->GetPosition().x * itr->second->GetPosition().x));
+		float vd = abs((playerPosition.y * playerPosition.y) + (itr->second->GetPosition().y * itr->second->GetPosition().y));
+		bool isAtop = hd < vd && playerPosition.x > itr->second->GetPosition().y;
+
+		if (doesIntersect && isAtop)
+		{
+			return true;
+		}
+		itr++;
+	}
+
+	return false;
+}

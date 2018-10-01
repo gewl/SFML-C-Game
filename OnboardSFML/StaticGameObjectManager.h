@@ -12,6 +12,7 @@ public:
 	VisibleGameObject* Get(std::string name) const;
 
 	void DrawAll(sf::RenderWindow& renderWindow);
+	const bool CheckCollisions(sf::Rect<float> playerBounds, sf::Vector2f playerPosition);
 
 private:
 	std::map<std::string, VisibleGameObject*> _staticGameObjects;

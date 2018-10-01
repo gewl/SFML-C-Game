@@ -11,11 +11,13 @@ public:
 	void Update(sf::Time elapsedTime);
 	void Draw(sf::RenderWindow& rw);
 	
-	float GetVelocity() const;
+	float GetHorizontalVelocity() const;
 
 private:
-	float _velocity;
+	float _horizontalVelocity;
+	float _verticalVelocity;
 	float _maxVelocity;
 
-	int groundedCount;
+	bool _isGrounded;
+	bool _isJumping;
 };

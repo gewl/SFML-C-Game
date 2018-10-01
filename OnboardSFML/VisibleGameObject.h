@@ -20,6 +20,7 @@ public:
 	virtual float GetHeight() const;
 
 	virtual sf::Rect<float> GetBoundingRect() const;
+	virtual float GetTopEdge() const;
 
 protected:
 	sf::Sprite& GetSprite();
